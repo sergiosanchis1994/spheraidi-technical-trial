@@ -1,21 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import ServiceComponent from '@/components/Service'
+import ChatComponent from './components/Chat.vue'
 
 Vue.use(Router)
 
-export default new Router({
+export const appRoutes = new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld
-    // },
-    {
-      path: '/',
-      name: 'ServiceComponent',
-      component: ServiceComponent
-    }
-  ]
+    { path: '/', component: ChatComponent, name: 'chat' },
+    { path: '*', redirect: { name: 'chat'} }
+  ],
+  mode: 'history'
 })
