@@ -1,4 +1,4 @@
-package com.spheraidi.backend;
+package com.spheraidi.backend.controllers;
 
 import com.spheraidi.backend.models.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
