@@ -1,5 +1,6 @@
 package com.spheraidi.backend.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -11,6 +12,9 @@ public class User {
 
     private String password;
 
+    @Column(name = "session_id")
+    private String sessionId;
+
     private boolean active;
 
     public String getPassword() {
@@ -19,6 +23,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public String getUsername() {
