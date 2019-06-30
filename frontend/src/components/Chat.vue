@@ -24,7 +24,7 @@ export default {
         return {
             messages: [],
             message : '',
-            connected: false
+            sessionId: ''
         }
     },
     methods: {
@@ -32,22 +32,25 @@ export default {
             console.log(this.message);
             if (this.stompClient && this.stompClient.connected) {
                 console.log("Sending...")
-                console.log(JSON.stringify({'content': this.message}))
-                this.stompClient.send('/app/from-client', JSON.stringify({'content': this.message}))
+                this.stompClient.send('/chat-room/chat', JSON.stringify({'content': this.message}))
             }
             this.message = '';
         
         }
     },
     created() {
-      this.socket = new SockJS('http://localhost:8088/websocket-endpoint')
-      this.stompClient = Stomp.over(this.socket)
+      this.stompClient = Stomp.over(new SockJS('http://localhost:8088/chat-websocket'))
       this.stompClient.connect({}, (frame) => {
-        this.connected = true
-        console.log(frame)
-        this.stompClient.subscribe('/topic/tick', (tick) => {
-          console.log("El contenido es: " + JSON.parse(tick.body).content)
-          this.messages.push({text: JSON.parse(tick.body).content})
+        this.sessionId = this.stompClient.ws._transport.url
+            .replace("ws://localhost:8088/chat-websocket",  "")
+            .replace("/websocket", "")
+            .split("/")[2];
+        console.log("Your current session is: " + this.sessionId);
+        this.stompClient.subscribe('/queue/' + this.sessionId + '/msg-sent', response => {
+            let newMessage = {
+                text: JSON.parse(response.body).content
+            }
+            this.messages.push(newMessage)
         })
       }, (error) => {
         console.log(error)

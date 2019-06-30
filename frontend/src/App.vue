@@ -3,6 +3,7 @@
     <nav class="navbar navbar-dark">
       <a class="navbar-brand">Sphera Global Health Care</a>
     </nav>
+
     <div class="row main-container">
       <div class="col-md-2 menu"></div>
       <router-view class="col-md-10 menu" :to="{name:'chat'}"></router-view>
@@ -12,7 +13,12 @@
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  data() {
+    return {
+      logged: false
+    }
+  }
 };
 </script>
 
