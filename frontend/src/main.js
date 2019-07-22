@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 import { appRoutes } from './router'
-// import VueWebsocket from "vue-websocket"
 
 Vue.config.productionTip = false
-
-// Vue.use(VueWebsocket, "ws:/user");
+Vue.co
 
 new Vue({
   el: '#app',

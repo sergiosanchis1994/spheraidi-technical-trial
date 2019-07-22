@@ -3,11 +3,8 @@
     <nav class="navbar navbar-dark">
       <a class="navbar-brand">Sphera Global Health Care</a>
     </nav>
-
-    <div class="row main-container">
-      <div class="col-md-2 menu"></div>
-      <router-view class="col-md-10 menu" :to="{name:'chat'}"></router-view>
-    </div>
+    <router-link v-if="authenticated" :to="{name:'login'}" v-on:click.native="logout()" replace>Logout</router-link>
+    <router-view @authenticated="setAuthenticated" />
   </div>
 </template>
 
@@ -16,9 +13,22 @@ export default {
   name: "App",
   data() {
     return {
-      logged: false
-    }
-  }
+      authenticated: false
+    };
+  },
+  mounted() {
+            if(!this.authenticated) {
+                this.$router.replace({ name: "login" });
+            }
+        },
+        methods: {
+            setAuthenticated(status) {
+                this.authenticated = status;
+            },
+            logout() {
+                this.authenticated = false;
+            }
+        }
 };
 </script>
 
@@ -31,11 +41,6 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.menu {
-  border: 5px solid #007bff;
-  background-color: #e3f2fd;
 }
 
 .main-container {
